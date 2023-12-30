@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  assistant-of-devil-backend:
+    build:
+      args:
+        user: $USER_NAME
+        uid: $UID
+      context: .
+    working_dir: /app
+    volumes:
+      - ./:/app
+    env_file:
+      - .env
+    ports:
+      - "${API_OUTSIDE_PORT}:${API_INSIDE_PORT}"
