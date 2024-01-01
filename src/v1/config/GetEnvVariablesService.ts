@@ -38,10 +38,3 @@ class GetEnvVariablesService {
 }
 
 export default GetEnvVariablesService
-
-
-// POSTGRES_PASSWORD=overcaqlacng
-// POSTGRES_USER=admin
-// POSTGRES_DB=db
-// POSTGRES_PORT=5432
-// POSTGRES_DB_HOST=localhost
