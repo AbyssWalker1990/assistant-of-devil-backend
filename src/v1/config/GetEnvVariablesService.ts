@@ -10,8 +10,17 @@ class GetEnvVariablesService {
             port: Number(this.getOrFail(env, 'API_INSIDE_PORT')),
         }
 
+        const db = {
+            host: this.getOrFail(env, 'POSTGRES_DB_HOST'),
+            port: Number(this.getOrFail(env, 'POSTGRES_PORT')),
+            user: this.getOrFail(env, 'POSTGRES_USER'),
+            password: this.getOrFail(env, 'POSTGRES_PASSWORD'),
+            database: this.getOrFail(env, 'POSTGRES_DB'),
+        }
+
         return {
             app,
+            db
         }
     }
 
@@ -29,3 +38,10 @@ class GetEnvVariablesService {
 }
 
 export default GetEnvVariablesService
+
+
+// POSTGRES_PASSWORD=overcaqlacng
+// POSTGRES_USER=admin
+// POSTGRES_DB=db
+// POSTGRES_PORT=5432
+// POSTGRES_DB_HOST=localhost
