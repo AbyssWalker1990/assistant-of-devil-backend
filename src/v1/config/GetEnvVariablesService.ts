@@ -18,9 +18,14 @@ class GetEnvVariablesService {
             database: this.getOrFail(env, 'POSTGRES_DB'),
         }
 
+        const openai = {
+            key: this.getOrFail(env, 'OPENAI_API_KEY'),
+        }
+
         return {
             app,
-            db
+            db,
+            openai,
         }
     }
 

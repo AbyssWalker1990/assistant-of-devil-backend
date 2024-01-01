@@ -7,8 +7,8 @@ const config: Config.InitialOptions = {
     },
     maxWorkers: '50%',
     collectCoverage: true,
-    collectCoverageFrom: ['./src/v1/(services|mappers)/**/*.ts'],
-    coveragePathIgnorePatterns: ['src/v1/services/ParseEnvVariablesService.ts'],
+    collectCoverageFrom: ['./src/v1/(services|mappers|config)/**/*.ts'],
+    coveragePathIgnorePatterns: ['src/v1/config/GetEnvVariablesService.ts'],
     restoreMocks: true,
 }
 
