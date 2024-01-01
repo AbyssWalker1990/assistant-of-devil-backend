@@ -9,6 +9,9 @@ type AppEnvType = {
         password: string
         database: string
     }
+    openai: {
+        key: string
+    }
 }
 
 export default AppEnvType
