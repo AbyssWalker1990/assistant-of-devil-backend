@@ -1,5 +1,5 @@
 import { Sequelize } from 'sequelize'
-import GetEnvVariablesService from './GetEnvVariablesService';
+import GetEnvVariablesService from './GetEnvVariablesService'
 
 class CreateSequelizeService {
     constructor(private getEnvVariablesService = new GetEnvVariablesService()) {}
@@ -9,7 +9,7 @@ class CreateSequelizeService {
 
         const sequelize = new Sequelize({
             dialect: 'postgres',
-            host: 'db',
+            host: db.host,
             port: db.port,
             database: db.database,
             username: db.user,
