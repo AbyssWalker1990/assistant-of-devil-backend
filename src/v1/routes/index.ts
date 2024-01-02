@@ -2,8 +2,11 @@ import { Router } from 'express'
 import { Request, Response } from 'express'
 import User, { UserMap } from '../models/User'
 import CreateSequelizeService from '../config/CreateSequelizeService'
+import AskAssistantController from '../controllers/AskAssistantController'
 
 const router = Router()
+
+router.post('/assistant', new AskAssistantController().post)
 
 router.get('/', (req, res) => {
     res.send('Hello World!')

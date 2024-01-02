@@ -1,0 +1,3 @@
+class AssistantThreadIdInvalidError {}
+
+export default AssistantThreadIdInvalidError

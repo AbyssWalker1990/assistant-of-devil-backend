@@ -1,0 +1,3 @@
+class AssistantQuestionInvalidError {}
+
+export default AssistantQuestionInvalidError

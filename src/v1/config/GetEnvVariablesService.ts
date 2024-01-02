@@ -19,7 +19,7 @@ class GetEnvVariablesService {
         }
 
         const openai = {
-            key: this.getOrFail(env, 'OPENAI_API_KEY'),
+            key: this.getOrFail(env, 'OPEN_AI_API_KEY'),
         }
 
         return {
