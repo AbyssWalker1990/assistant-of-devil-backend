@@ -10,7 +10,11 @@
     "build": "npx tsc",
     "start": "npx dist/server.js",
     "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/server.js\"",
-    "test": "jest"
+    "test": "jest",
+    "migration:create": "ts-node ./node_modules/typeorm/cli migration:create",
+    "migration:generate": "ts-node ./node_modules/typeorm/cli migration:generate -d ./config/data-source.config.ts",
+    "migration:up": "ts-node ./node_modules/typeorm/cli migration:run -d ./config/data-source.config.ts",
+    "migration:down": "ts-node ./node_modules/typeorm/cli migration:revert -d ./config/data-source.config.ts"
   },
   "author": "Volodymyr Bordiian",
   "license": "ISC",
@@ -18,7 +22,9 @@
     "cli-color": "^2.0.3",
     "cors": "^2.8.5",
     "express": "^4.18.2",
-    "http-status-codes": "^2.3.0"
+    "http-status-codes": "^2.3.0",
+    "mysql": "^2.18.1",
+    "typeorm": "^0.3.20"
   },
   "devDependencies": {
     "@types/cli-color": "^2.0.6",

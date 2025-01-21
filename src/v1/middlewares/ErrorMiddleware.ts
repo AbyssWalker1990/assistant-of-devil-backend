@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 
 import ResponseErrorCodeEnum from '../enums/ResponseErrorCodeEnum'
-import AbstractHttpResponseError from '../errors/AbstractHttpResponseError'
+import AbstractHttpResponseError from '../exceptions/AbstractHttpResponseError'
 
 class ErrorMiddleware {
     /* eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars */

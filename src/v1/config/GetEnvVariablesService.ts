@@ -1,4 +1,4 @@
-import EnvVariableNotFoundError from '../errors/inner/EnvVariableNotFoundError'
+import EnvVariableNotFoundError from '../exceptions/inner/EnvVariableNotFoundError'
 import AppEnvType from '../types/AppEnvType'
 
 class GetEnvVariablesService {
