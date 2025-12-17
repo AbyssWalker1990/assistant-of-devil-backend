@@ -1,5 +1,5 @@
 enum ResponseErrorCodeEnum {
-    UNKNOWN = 'unknown',
+  UNKNOWN = 'unknown',
 }
 
 export default ResponseErrorCodeEnum
