@@ -5,8 +5,8 @@ import cors from 'cors'
 import ErrorMiddleware from './v1/middlewares/ErrorMiddleware'
 import v1Router from './v1/routes'
 import AppEnvType from './v1/types/AppEnvType'
-import CreateSequelizeService from './v1/config/CreateSequelizeService'
-import { UserMap } from './v1/models/User'
+import { sql } from 'drizzle-orm'
+import CreateDrizzleService from './v1/config/CreateDrizzleService'
 
 class App {
   constructor(
@@ -45,9 +45,8 @@ class App {
   }
 
   private async connectToDatabase(): Promise<void> {
-    const sequelize = new CreateSequelizeService().handle()
-    await sequelize.authenticate()
-    UserMap(sequelize)
+    const db = new CreateDrizzleService().handle()
+    await db.execute(sql`SELECT 1`)
   }
 }
 
