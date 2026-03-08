@@ -1,23 +1,25 @@
-import { Sequelize } from 'sequelize'
+import { drizzle } from 'drizzle-orm/node-postgres'
+import { Pool } from 'pg'
+
+import { users } from '../../../database/schema'
 import GetEnvVariablesService from './GetEnvVariablesService'
 
-class CreateSequelizeService {
+class CreateDrizzleService {
   constructor(private getEnvVariablesService = new GetEnvVariablesService()) {}
 
-  public handle(): Sequelize {
+  public handle() {
     const { db } = this.getEnvVariablesService.handle(process.env)
 
-    const sequelize = new Sequelize({
-      dialect: 'postgres',
+    const pool = new Pool({
       host: db.host,
       port: db.port,
       database: db.database,
-      username: db.user,
+      user: db.user,
       password: db.password,
     })
 
-    return sequelize
+    return drizzle(pool, { schema: { users } })
   }
 }
 
-export default CreateSequelizeService
+export default CreateDrizzleService

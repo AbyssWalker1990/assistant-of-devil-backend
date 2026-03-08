@@ -1,18 +1,17 @@
 import { describe, expect, test } from '@jest/globals'
-import { Sequelize } from 'sequelize'
 
 import EnvVariableNotFoundError from '../../../src/v1/errors/inner/EnvVariableNotFoundError'
-import CreateSequelizeService from '../../../src/v1/config/CreateSequelizeService'
+import CreateDrizzleService from '../../../src/v1/config/CreateDrizzleService'
 import GetEnvVariablesService from '../../../src/v1/config/GetEnvVariablesService'
 import mockImplementations from '../utils/mockImplementations'
 import returnValue from '../utils/mockReturnValue'
 
-describe('CreateSequelizeService', () => {
+describe('CreateDrizzleService', () => {
   const db = {
     host: 'host',
     port: 1234,
     database: 'database',
-    username: 'username',
+    user: 'user',
     password: 'password',
   }
   const parseEnvResult = {
@@ -20,7 +19,7 @@ describe('CreateSequelizeService', () => {
   }
 
   const getEnvVariablesService = new GetEnvVariablesService()
-  const createSequelizeService = new CreateSequelizeService(getEnvVariablesService)
+  const createDrizzleService = new CreateDrizzleService(getEnvVariablesService)
 
   describe('handle', () => {
     test('Throw EnvVariableNotFoundError if getEnvVariablesService fails', () => {
@@ -28,15 +27,17 @@ describe('CreateSequelizeService', () => {
         throw new EnvVariableNotFoundError()
       })
 
-      expect(() => createSequelizeService.handle()).toThrow(EnvVariableNotFoundError)
+      expect(() => createDrizzleService.handle()).toThrow(EnvVariableNotFoundError)
 
       expect(jest.spyOn(getEnvVariablesService, 'handle')).toBeCalled()
     })
 
-    test('return Sequelize object', () => {
+    test('return drizzle db object', () => {
       getEnvVariablesService.handle = returnValue(parseEnvResult)
 
-      expect(createSequelizeService.handle()).toBeInstanceOf(Sequelize)
+      const db = createDrizzleService.handle()
+      expect(typeof db.select).toBe('function')
+      expect(typeof db.insert).toBe('function')
 
       expect(jest.spyOn(getEnvVariablesService, 'handle')).toBeCalled()
     })

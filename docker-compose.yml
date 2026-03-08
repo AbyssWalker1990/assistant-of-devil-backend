@@ -19,7 +19,6 @@ services:
 
   db:
     image: postgres
-    restart: always
     ports:
       - '${POSTGRES_PORT}:${POSTGRES_PORT}'
     environment:
