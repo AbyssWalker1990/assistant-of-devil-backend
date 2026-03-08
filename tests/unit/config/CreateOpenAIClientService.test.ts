@@ -12,31 +12,31 @@ import mockImplementations from '../utils/mockImplementations'
 import returnValue from '../utils/mockReturnValue'
 
 describe('CreateOpenAIClientService', () => {
-    const key = 'openai key'
-    const parseEnvResult = {
-        openai: { key },
-    }
+  const key = 'openai key'
+  const parseEnvResult = {
+    openai: { key },
+  }
 
-    const getEnvVariablesService = new GetEnvVariablesService()
-    const createOpenAIClientService = new CreateOpenAIClientService(getEnvVariablesService)
+  const getEnvVariablesService = new GetEnvVariablesService()
+  const createOpenAIClientService = new CreateOpenAIClientService(getEnvVariablesService)
 
-    describe('handle', () => {
-        test('Throw EnvVariableNotFoundError if getEnvVariablesService fails', () => {
-            getEnvVariablesService.handle = mockImplementations(() => {
-                throw new EnvVariableNotFoundError()
-            })
+  describe('handle', () => {
+    test('Throw EnvVariableNotFoundError if getEnvVariablesService fails', () => {
+      getEnvVariablesService.handle = mockImplementations(() => {
+        throw new EnvVariableNotFoundError()
+      })
 
-            expect(() => createOpenAIClientService.handle()).toThrow(EnvVariableNotFoundError)
+      expect(() => createOpenAIClientService.handle()).toThrow(EnvVariableNotFoundError)
 
-            expect(jest.spyOn(getEnvVariablesService, 'handle')).toBeCalled()
-        })
-
-        test('return OpenAI object', () => {
-            getEnvVariablesService.handle = returnValue(parseEnvResult)
-
-            expect(createOpenAIClientService.handle()).toBeInstanceOf(OpenAI)
-
-            expect(jest.spyOn(getEnvVariablesService, 'handle')).toBeCalled()
-        })
+      expect(jest.spyOn(getEnvVariablesService, 'handle')).toBeCalled()
     })
+
+    test('return OpenAI object', () => {
+      getEnvVariablesService.handle = returnValue(parseEnvResult)
+
+      expect(createOpenAIClientService.handle()).toBeInstanceOf(OpenAI)
+
+      expect(jest.spyOn(getEnvVariablesService, 'handle')).toBeCalled()
+    })
+  })
 })
