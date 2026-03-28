@@ -1,9 +1,9 @@
 import { describe, expect, test } from '@jest/globals'
 import OpenAI from 'openai'
 
-import EnvVariableNotFoundError from '../../../src/v1/errors/inner/EnvVariableNotFoundError'
+import EnvVariableNotFoundError from '../../../src/v1/exceptions/inner/EnvVariableNotFoundException'
 import CreateOpenAIClientService from '../../../src/v1/config/CreateOpenAIClientService'
-import GetEnvVariablesService from '../../../src/v1/config/GetEnvVariablesService'
+import ParseEnvVariablesService from '../../../src/v1/services/ParseEnvVariablesService'
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import mockImplementations from '../utils/mockImplementations'
@@ -17,7 +17,7 @@ describe('CreateOpenAIClientService', () => {
     openai: { key },
   }
 
-  const getEnvVariablesService = new GetEnvVariablesService()
+  const getEnvVariablesService = new ParseEnvVariablesService()
   const createOpenAIClientService = new CreateOpenAIClientService(getEnvVariablesService)
 
   describe('handle', () => {

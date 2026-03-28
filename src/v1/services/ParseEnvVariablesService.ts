@@ -13,16 +13,15 @@ class ParseEnvVariablesService {
     }
 
     const db = {
-      type: 'mysql',
-      host: getOrFail(env, 'MYSQL_HOST'),
-      port: Number(getOrFail(env, 'MYSQL_PORT')),
-      username: getOrFail(env, 'MYSQL_USER'),
-      password: getOrFail(env, 'MYSQL_PASSWORD'),
-      database: getOrFail(env, 'MYSQL_DATABASE'),
+      host: getOrFail(env, 'POSTGRES_HOST'),
+      port: Number(getOrFail(env, 'POSTGRES_PORT')),
+      user: getOrFail(env, 'POSTGRES_USER'),
+      password: getOrFail(env, 'POSTGRES_PASSWORD'),
+      database: getOrFail(env, 'POSTGRES_DB'),
     }
 
     const openai = {
-      apiKey: getOrFail(env, 'OPENAI_API_KEY'),
+      key: getOrFail(env, 'OPEN_AI_API_KEY'),
     }
 
     return {

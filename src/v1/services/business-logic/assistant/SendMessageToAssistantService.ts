@@ -1,20 +1,21 @@
 import CreateOpenAIClientService from './CreateOpenAIClientService'
-import { MessageContent } from 'openai/resources/beta/threads/messages'
 
 class SendMessageToAssistantService {
   constructor(private readonly createOpenAIClientService = new CreateOpenAIClientService()) {}
-  public async handle(message: string = 'Count 1 + 10'): Promise<Array<MessageContent>> {
-    const openAIClient = await this.createOpenAIClientService.handle()
 
-    const thread = await openAIClient.beta.threads.create()
-    const answer = await openAIClient.beta.threads.messages.create(thread.id, {
-      role: 'user',
-      content: message,
+  public async handle(message: string = 'Count 1W + 10', previousResponseId?: string): Promise<string> {
+    const openAIClient = this.createOpenAIClientService.handle()
+
+    const response = await openAIClient.responses.create({
+      model: 'gpt-4o',
+      input: message,
+      ...(previousResponseId && { previous_response_id: previousResponseId }),
+      store: true,
     })
 
-    console.log(answer.content)
+    console.log(response.output_text)
 
-    return answer.content
+    return response.output_text
   }
 }
 

@@ -1,7 +1,6 @@
 import { green as info } from 'cli-color/bare'
-import { DataSource } from 'typeorm'
+import { Pool } from 'pg'
 
-import AppEnvType from '../types/AppEnvType'
 import ParseEnvVariablesService from './ParseEnvVariablesService'
 
 class CreateDbConnectionService {
@@ -9,23 +8,20 @@ class CreateDbConnectionService {
 
     async handle(): Promise<void> {
         const {
-            db: { host, port, username, password, database },
+            db: { host, port, user, password, database },
         } = this.parseEnvVariablesService.handle(process.env)
 
-        const dataSource = new DataSource({
-            type: 'mysql',
+        const pool = new Pool({
             host,
             port,
-            username,
+            user,
             password,
             database,
-            entities: [],
-            synchronize: true,
         })
 
         try {
-            await dataSource.initialize()
-            console.info(`🔌 ${info(`Successfully established MySQL DB connection`)}  🔌`)
+            await pool.query('SELECT 1')
+            console.info(`🔌 ${info(`Successfully established PostgreSQL DB connection`)}  🔌`)
         } catch (err) {
             console.log(err)
         }

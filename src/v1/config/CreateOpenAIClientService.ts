@@ -1,9 +1,9 @@
 import OpenAI from 'openai'
 
-import GetEnvVariablesService from './GetEnvVariablesService'
+import ParseEnvVariablesService from '../services/ParseEnvVariablesService'
 
 class CreateOpenAIClientService {
-  constructor(private readonly getEnvVariablesService = new GetEnvVariablesService()) {}
+  constructor(private readonly getEnvVariablesService = new ParseEnvVariablesService()) {}
 
   /**
    * @throws inner/EnvVariableNotFoundError

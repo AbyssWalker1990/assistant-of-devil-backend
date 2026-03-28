@@ -1,6 +1,6 @@
 import App from './app'
-import GetEnvVariablesService from './v1/config/GetEnvVariablesService'
+import ParseEnvVariablesService from './v1/services/ParseEnvVariablesService'
 
-const env = new GetEnvVariablesService().handle(process.env)
+const env = new ParseEnvVariablesService().handle(process.env)
 
 new App(env).listen()

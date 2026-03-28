@@ -1,4 +1,4 @@
-import { OpenAI } from 'openai'
+import OpenAI from 'openai'
 import ParseEnvVariablesService from '../../ParseEnvVariablesService'
 
 /**
@@ -7,14 +7,12 @@ import ParseEnvVariablesService from '../../ParseEnvVariablesService'
 class CreateOpenAIClientService {
   constructor(private readonly parseEnvVariablesService = new ParseEnvVariablesService()) {}
 
-  public async handle(): Promise<OpenAI> {
+  public handle(): OpenAI {
     const {
-      openai: { apiKey },
+      openai: { key },
     } = this.parseEnvVariablesService.handle(process.env)
 
-    const openAIClient = new OpenAI({ apiKey })
-
-    return openAIClient
+    return new OpenAI({ apiKey: key })
   }
 }
 

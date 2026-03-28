@@ -1,8 +1,8 @@
 import { describe, expect, test } from '@jest/globals'
 
-import EnvVariableNotFoundError from '../../../src/v1/errors/inner/EnvVariableNotFoundError'
+import EnvVariableNotFoundError from '../../../src/v1/exceptions/inner/EnvVariableNotFoundException'
 import CreateDrizzleService from '../../../src/v1/config/CreateDrizzleService'
-import GetEnvVariablesService from '../../../src/v1/config/GetEnvVariablesService'
+import ParseEnvVariablesService from '../../../src/v1/services/ParseEnvVariablesService'
 import mockImplementations from '../utils/mockImplementations'
 import returnValue from '../utils/mockReturnValue'
 
@@ -18,7 +18,7 @@ describe('CreateDrizzleService', () => {
     db,
   }
 
-  const getEnvVariablesService = new GetEnvVariablesService()
+  const getEnvVariablesService = new ParseEnvVariablesService()
   const createDrizzleService = new CreateDrizzleService(getEnvVariablesService)
 
   describe('handle', () => {

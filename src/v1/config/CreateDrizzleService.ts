@@ -2,10 +2,10 @@ import { drizzle } from 'drizzle-orm/node-postgres'
 import { Pool } from 'pg'
 
 import { users } from '../../../database/schema'
-import GetEnvVariablesService from './GetEnvVariablesService'
+import ParseEnvVariablesService from '../services/ParseEnvVariablesService'
 
 class CreateDrizzleService {
-  constructor(private getEnvVariablesService = new GetEnvVariablesService()) {}
+  constructor(private getEnvVariablesService = new ParseEnvVariablesService()) {}
 
   public handle() {
     const { db } = this.getEnvVariablesService.handle(process.env)

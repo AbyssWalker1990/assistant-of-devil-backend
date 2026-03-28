@@ -1,13 +1,15 @@
-FROM node:18.13
-
+FROM node:18-alpine AS base
 WORKDIR /app
 
-USER root
-RUN chown -R 1000:1000 "/root/.npm"
-USER 1000:1000
-
+# --- Production ---
+FROM base AS prod
+COPY package*.json ./
+RUN npm ci --omit=dev
+COPY dist/ ./dist/
 EXPOSE 3000
+CMD ["node", "dist/src/server.js"]
 
-ENV COMMAND="npm run dev"
-
-CMD [ -d "node_modules" ] && ${COMMAND} || npm ci && ${COMMAND}
+# --- Development ---
+FROM base AS dev
+EXPOSE 3000
+CMD ["sh", "-c", "npm install && npm run dev"]
