@@ -3,7 +3,11 @@ import CreateOpenAIClientService from './CreateOpenAIClientService'
 class SendMessageToAssistantService {
   constructor(private readonly createOpenAIClientService = new CreateOpenAIClientService()) {}
 
-  public async handle(message: string = 'Count 1W + 10', previousResponseId?: string): Promise<string> {
+  public async handle(
+    message: string = 'Count 1W + 10',
+    previousResponseId?: string,
+  ): Promise<{ text: string; responseId: string }> {
+    console.log(`Sending message to assistant: ${message}, previousResponseId: ${previousResponseId}`)
     const openAIClient = this.createOpenAIClientService.handle()
 
     const response = await openAIClient.responses.create({
@@ -13,9 +17,9 @@ class SendMessageToAssistantService {
       store: true,
     })
 
-    console.log(response.output_text)
+    console.log(`Received response from assistant: ${response.output_text}, responseId: ${response.id}`)
 
-    return response.output_text
+    return { text: response.output_text, responseId: response.id }
   }
 }
 

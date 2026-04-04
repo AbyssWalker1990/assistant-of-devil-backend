@@ -1,33 +1,17 @@
 import { Router } from 'express'
-import { Request, Response } from 'express'
-import { eq } from 'drizzle-orm'
-import { users } from '../models/User'
-import CreateDrizzleService from '../config/CreateDrizzleService'
+
+import CreateUserController from '../controllers/CreateUserController'
+import GetSingleUserController from '../controllers/GetSingleUserController'
+import GetUsersController from '../controllers/GetUsersController'
+import HelloController from '../controllers/HelloController'
+import SendChatMessageController from '../controllers/SendChatMessageController'
 
 const router = Router()
-const db = new CreateDrizzleService().handle()
 
-router.get('/', (req, res) => {
-  res.send('Hello World!')
-})
-
-// GET - users
-router.get('/users', async (req: Request, res: Response) => {
-  const result = await db.select().from(users)
-  res.status(200).json({ users: result })
-})
-// GET - users/:id
-router.get('/users/:id', async (req: Request, res: Response) => {
-  const id = Number(req.params.id)
-  const result = await db.query.users.findFirst({
-    where: eq(users.id, id),
-  })
-  res.status(200).json({ user: result })
-})
-// POST - users
-router.post('/users', async (req: Request, res: Response) => {
-  const [newUser] = await db.insert(users).values(req.body).returning()
-  res.status(201).json({ user: newUser })
-})
+router.get('/', new HelloController().get)
+router.get('/users', new GetUsersController().get)
+router.get('/users/:id', new GetSingleUserController().get)
+router.post('/users', new CreateUserController().post)
+router.post('/chat/messages', new SendChatMessageController().post)
 
 export default router
