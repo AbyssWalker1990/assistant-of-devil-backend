@@ -2,8 +2,8 @@
 
 ## Critical
 
-- [ ] Hash pass phrases before storage (bcrypt/argon2) and update lookup to compare against hash — `database/schema.ts`, `IdentifyUserService.ts`
-- [ ] Exclude `passPhrase` from all API responses (SELECT only needed columns or strip before returning) — `GetAiUsersController.ts`, `GetSingleAiUserController.ts`
+- [x] Hash pass phrases before storage (bcrypt/argon2) and update lookup to compare against hash — `database/schema.ts`, `IdentifyUserService.ts`
+- [x] Exclude `passPhrase` from all API responses (SELECT only needed columns or strip before returning) — `GetAiUsersController.ts`, `GetSingleAiUserController.ts`
 - [ ] Add authentication middleware to all `/ai-users` and `/ai-users/:userId/facts` routes — `src/v1/routes/index.ts`
 - [ ] Fix TOCTOU race in user identification — use `INSERT ... ON CONFLICT DO NOTHING RETURNING` or wrap find+insert in a transaction — `IdentifyUserService.ts`
 

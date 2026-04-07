@@ -1,14 +1,12 @@
 import { NextFunction, Request, Response } from 'express'
 
-import CreateDrizzleService from '../config/CreateDrizzleService'
-import { users } from '../models/User'
+import PrepareGetUsersService from '../services/business-logic/users/PrepareGetUsersService'
 
 class GetUsersController {
   async get(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const db = new CreateDrizzleService().handle()
-      const result = await db.select().from(users)
-      res.status(200).json({ users: result })
+      const result = await new PrepareGetUsersService().handle(req)
+      res.status(200).json(result)
     } catch (e: unknown) {
       next(e)
     }

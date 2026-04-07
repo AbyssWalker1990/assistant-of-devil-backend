@@ -1,8 +1,11 @@
-import { and, eq, sql } from 'drizzle-orm'
+import bcrypt from 'bcrypt'
+import { eq, sql } from 'drizzle-orm'
 
 import CreateDrizzleService from '../../../config/CreateDrizzleService'
 import { aiUsers, AiUser } from '../../../models/AiUser'
 import { userFacts, UserFact } from '../../../models/UserFact'
+
+const SALT_ROUNDS = 12
 
 export interface IdentifyUserResult {
   aiUser: AiUser
@@ -16,19 +19,21 @@ class IdentifyUserService {
   public async handle(name: string, passPhrase: string): Promise<IdentifyUserResult> {
     const db = this.createDrizzleService.handle()
 
-    const existingUser = await db.query.aiUsers.findFirst({
-      where: and(
-        sql`LOWER(${aiUsers.name}) = LOWER(${name})`,
-        sql`LOWER(${aiUsers.passPhrase}) = LOWER(${passPhrase})`,
-      ),
-    })
+    const candidates = await db
+      .select()
+      .from(aiUsers)
+      .where(sql`LOWER(${aiUsers.name}) = LOWER(${name})`)
 
-    if (existingUser) {
-      const facts = await db.select().from(userFacts).where(eq(userFacts.aiUserId, existingUser.id))
-      return { aiUser: existingUser, facts, isNewUser: false }
+    for (const candidate of candidates) {
+      const match = await bcrypt.compare(passPhrase, candidate.passPhrase)
+      if (match) {
+        const facts = await db.select().from(userFacts).where(eq(userFacts.aiUserId, candidate.id))
+        return { aiUser: candidate, facts, isNewUser: false }
+      }
     }
 
-    const [newUser] = await db.insert(aiUsers).values({ name, passPhrase }).returning()
+    const hashedPassPhrase = await bcrypt.hash(passPhrase, SALT_ROUNDS)
+    const [newUser] = await db.insert(aiUsers).values({ name, passPhrase: hashedPassPhrase }).returning()
     return { aiUser: newUser, facts: [], isNewUser: true }
   }
 }

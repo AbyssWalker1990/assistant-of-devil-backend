@@ -50,7 +50,19 @@ Express.js API with TypeScript, PostgreSQL via Drizzle ORM, and OpenAI integrati
 **Service pattern:** All services are classes with a `handle()` method. Dependencies are passed via constructor injection (no DI container). Services are organized into:
 - `src/v1/config/` — factory services (Drizzle client, OpenAI client)
 - `src/v1/services/` — env parsing, DB connection
-- `src/v1/services/business-logic/` — domain logic (e.g., assistant message handling)
+- `src/v1/services/business-logic/` — domain logic, subdivided by resource (e.g., `assistant/`, `ai-users/`, `users/`, `user-facts/`)
+
+**Controller pattern:** Controllers must be thin. Each controller has a corresponding `Prepare<ControllerName>Service` in `src/v1/services/business-logic/` that handles all logic — request parsing, DB interaction, business rules, and response shaping. The controller only instantiates the service, sends the response, and forwards errors to `next`. Example:
+```ts
+async get(req: Request, res: Response, next: NextFunction): Promise<void> {
+  try {
+    const result = await new PrepareGetAiUsersService().handle(req)
+    res.status(200).json(result)
+  } catch (e: unknown) {
+    next(e)
+  }
+}
+```
 
 **Error handling:** Custom exception hierarchy rooted in `AbstractHttpResponseError`. Errors are caught by `ErrorMiddleware` and returned as typed JSON responses using `ResponseErrorCodeEnum`.
 
