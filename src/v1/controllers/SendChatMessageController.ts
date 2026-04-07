@@ -7,9 +7,19 @@ class SendChatMessageController {
   async post(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const dto = new SendChatMessageRequestService().handle(req)
-      const service = new SendMessageToAssistantService()
-      const result = await service.handle(dto.message, dto.previousResponseId)
-      res.status(200).json({ response: result.text, responseId: result.responseId })
+      const result = await new SendMessageToAssistantService().handle(
+        dto.message,
+        dto.previousResponseId,
+        dto.aiUserId,
+      )
+      res.status(200).json({
+        response: result.text,
+        responseId: result.responseId,
+        ...(result.aiUserId !== undefined && { aiUserId: result.aiUserId }),
+        ...(result.aiUserName !== undefined && { aiUserName: result.aiUserName }),
+        ...(result.isNewUser !== undefined && { isNewUser: result.isNewUser }),
+        ...(result.facts !== undefined && { facts: result.facts }),
+      })
     } catch (e: unknown) {
       next(e)
     }

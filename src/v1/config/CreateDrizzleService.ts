@@ -1,7 +1,7 @@
 import { drizzle } from 'drizzle-orm/node-postgres'
 import { Pool } from 'pg'
 
-import { users } from '../../../database/schema'
+import { users, aiUsers, userFacts } from '../../../database/schema'
 import ParseEnvVariablesService from '../services/ParseEnvVariablesService'
 
 class CreateDrizzleService {
@@ -18,7 +18,7 @@ class CreateDrizzleService {
       password: db.password,
     })
 
-    return drizzle(pool, { schema: { users } })
+    return drizzle(pool, { schema: { users, aiUsers, userFacts } })
   }
 }
 
