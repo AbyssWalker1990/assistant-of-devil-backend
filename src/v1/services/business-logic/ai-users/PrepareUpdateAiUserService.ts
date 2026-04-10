@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt'
 import { Request } from 'express'
 import { eq } from 'drizzle-orm'
 
-import CreateDrizzleService from '../../../config/CreateDrizzleService'
+import db from '../../../config/db'
 import { aiUsers, AiUser } from '../../../models/AiUser'
 import UpdateAiUserRequestService from '../../../request-services/UpdateAiUserRequestService'
 import AiUserNotFoundException from '../../../exceptions/AiUserNotFoundException'
@@ -13,7 +13,6 @@ class PrepareUpdateAiUserService {
   public async handle(req: Request): Promise<{ aiUser: Omit<AiUser, 'passPhrase'> }> {
     const { id, passPhrase, ...rest } = new UpdateAiUserRequestService().handle(req)
     const hashedPassPhrase = passPhrase !== undefined ? await bcrypt.hash(passPhrase, SALT_ROUNDS) : undefined
-    const db = new CreateDrizzleService().handle()
     const [updated] = await db
       .update(aiUsers)
       .set({ ...rest, ...(hashedPassPhrase !== undefined && { passPhrase: hashedPassPhrase }), updatedAt: new Date() })

@@ -6,7 +6,7 @@ import ErrorMiddleware from './v1/middlewares/ErrorMiddleware'
 import v1Router from './v1/routes'
 import AppEnvType from './v1/types/AppEnvType'
 import { sql } from 'drizzle-orm'
-import CreateDrizzleService from './v1/config/CreateDrizzleService'
+import db from './v1/config/db'
 
 class App {
   constructor(
@@ -45,7 +45,6 @@ class App {
   }
 
   private async connectToDatabase(): Promise<void> {
-    const db = new CreateDrizzleService().handle()
     await db.execute(sql`SELECT 1`)
   }
 }

@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt'
 import { eq, sql } from 'drizzle-orm'
 
-import CreateDrizzleService from '../../../config/CreateDrizzleService'
+import db from '../../../config/db'
 import { aiUsers, AiUser } from '../../../models/AiUser'
 import { userFacts, UserFact } from '../../../models/UserFact'
 
@@ -14,11 +14,7 @@ export interface IdentifyUserResult {
 }
 
 class IdentifyUserService {
-  constructor(private readonly createDrizzleService = new CreateDrizzleService()) {}
-
   public async handle(name: string, passPhrase: string): Promise<IdentifyUserResult> {
-    const db = this.createDrizzleService.handle()
-
     const candidates = await db
       .select()
       .from(aiUsers)

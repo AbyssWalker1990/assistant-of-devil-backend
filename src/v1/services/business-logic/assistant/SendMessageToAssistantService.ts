@@ -2,7 +2,7 @@ import { eq } from 'drizzle-orm'
 
 import { aiUsers } from '../../../models/AiUser'
 import { UserFact, userFacts } from '../../../models/UserFact'
-import CreateDrizzleService from '../../../config/CreateDrizzleService'
+import db from '../../../config/db'
 import CreateOpenAIClientService from './CreateOpenAIClientService'
 import BuildSystemInstructionsService from './BuildSystemInstructionsService'
 import ProcessToolCallService from './ProcessToolCallService'
@@ -20,7 +20,6 @@ export interface SendMessageResult {
 class SendMessageToAssistantService {
   constructor(
     private readonly createOpenAIClientService = new CreateOpenAIClientService(),
-    private readonly createDrizzleService = new CreateDrizzleService(),
     private readonly buildSystemInstructionsService = new BuildSystemInstructionsService(),
     private readonly processToolCallService = new ProcessToolCallService(),
   ) {}
@@ -34,7 +33,6 @@ class SendMessageToAssistantService {
 
     let instructions: string
     if (aiUserId) {
-      const db = this.createDrizzleService.handle()
       const aiUser = await db.query.aiUsers.findFirst({ where: eq(aiUsers.id, aiUserId) })
       const facts = aiUser
         ? await db.select().from(userFacts).where(eq(userFacts.aiUserId, aiUserId))

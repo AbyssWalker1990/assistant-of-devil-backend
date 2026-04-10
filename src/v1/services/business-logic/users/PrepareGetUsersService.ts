@@ -1,11 +1,10 @@
 import { Request } from 'express'
 
-import CreateDrizzleService from '../../../config/CreateDrizzleService'
+import db from '../../../config/db'
 import { users, User } from '../../../models/User'
 
 class PrepareGetUsersService {
   public async handle(_req: Request): Promise<{ users: User[] }> {
-    const db = new CreateDrizzleService().handle()
     const result = await db.select().from(users)
     return { users: result }
   }

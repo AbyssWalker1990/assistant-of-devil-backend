@@ -1,7 +1,7 @@
 import { Request } from 'express'
 import { and, eq } from 'drizzle-orm'
 
-import CreateDrizzleService from '../../../config/CreateDrizzleService'
+import db from '../../../config/db'
 import { userFacts, UserFact } from '../../../models/UserFact'
 import UpdateUserFactRequestService from '../../../request-services/UpdateUserFactRequestService'
 import UserFactNotFoundException from '../../../exceptions/UserFactNotFoundException'
@@ -9,7 +9,6 @@ import UserFactNotFoundException from '../../../exceptions/UserFactNotFoundExcep
 class PrepareUpdateUserFactService {
   public async handle(req: Request): Promise<{ fact: UserFact }> {
     const { id, userId, ...fields } = new UpdateUserFactRequestService().handle(req)
-    const db = new CreateDrizzleService().handle()
     const [updated] = await db
       .update(userFacts)
       .set({ ...fields, updatedAt: new Date() })

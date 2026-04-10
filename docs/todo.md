@@ -9,7 +9,7 @@
 
 ## Important
 
-- [ ] Make Drizzle/pg Pool a singleton — create once at app startup and share across the app instead of `new CreateDrizzleService().handle()` per request
+- [x] Make Drizzle/pg Pool a singleton — create once at app startup and share across the app instead of `new CreateDrizzleService().handle()` per request
 - [ ] Require at least one field in `UpdateAiUserRequestDto` — add `.refine()` to reject empty update bodies — `src/v1/dtos/UpdateAiUserRequestDto.ts`
 - [ ] Validate AI tool call arguments at runtime (Zod or manual type checks) instead of blind `JSON.parse` cast — `ProcessToolCallService.ts:38`
 - [ ] Replace `if (aiUserId)` with `if (aiUserId !== undefined)` — `SendMessageToAssistantService.ts:35`
