@@ -1,11 +1,8 @@
-import { eq } from 'drizzle-orm'
-
-import { aiUsers } from '../../../models/AiUser'
-import { UserFact, userFacts } from '../../../models/UserFact'
-import db from '../../../config/db'
+import { UserFact } from '../../../../../database/schema'
 import CreateOpenAIClientService from './CreateOpenAIClientService'
 import BuildSystemInstructionsService from './BuildSystemInstructionsService'
 import ProcessToolCallService from './ProcessToolCallService'
+import FetchUserContextService from './FetchUserContextService'
 import identifyUserTool from '../../../constants/identifyUserTool'
 
 export interface SendMessageResult {
@@ -22,6 +19,7 @@ class SendMessageToAssistantService {
     private readonly createOpenAIClientService = new CreateOpenAIClientService(),
     private readonly buildSystemInstructionsService = new BuildSystemInstructionsService(),
     private readonly processToolCallService = new ProcessToolCallService(),
+    private readonly fetchUserContextService = new FetchUserContextService(),
   ) {}
 
   public async handle(
@@ -33,10 +31,7 @@ class SendMessageToAssistantService {
 
     let instructions: string
     if (aiUserId) {
-      const aiUser = await db.query.aiUsers.findFirst({ where: eq(aiUsers.id, aiUserId) })
-      const facts = aiUser
-        ? await db.select().from(userFacts).where(eq(userFacts.aiUserId, aiUserId))
-        : []
+      const { aiUser, facts } = await this.fetchUserContextService.handle(aiUserId)
       instructions = this.buildSystemInstructionsService.handle(
         aiUser ? { userName: aiUser.name, facts } : undefined,
       )

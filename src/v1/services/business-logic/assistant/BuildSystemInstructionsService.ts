@@ -1,4 +1,4 @@
-import { UserFact } from '../../../models/UserFact'
+import { UserFact } from '../../../../../database/schema'
 import { PRE_IDENTIFICATION_INSTRUCTIONS, buildPostIdentificationInstructions } from '../../../constants/systemInstructions'
 
 interface IdentifiedContext {

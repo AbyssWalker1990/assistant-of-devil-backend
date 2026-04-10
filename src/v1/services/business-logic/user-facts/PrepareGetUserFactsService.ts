@@ -2,7 +2,7 @@ import { Request } from 'express'
 import { eq } from 'drizzle-orm'
 
 import db from '../../../config/db'
-import { userFacts, UserFact } from '../../../models/UserFact'
+import { userFacts, UserFact } from '../../../../../database/schema'
 import GetUserFactsRequestService from '../../../request-services/GetUserFactsRequestService'
 
 class PrepareGetUserFactsService {

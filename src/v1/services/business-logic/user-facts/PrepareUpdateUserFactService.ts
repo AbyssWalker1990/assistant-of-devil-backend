@@ -2,7 +2,7 @@ import { Request } from 'express'
 import { and, eq } from 'drizzle-orm'
 
 import db from '../../../config/db'
-import { userFacts, UserFact } from '../../../models/UserFact'
+import { userFacts, UserFact } from '../../../../../database/schema'
 import UpdateUserFactRequestService from '../../../request-services/UpdateUserFactRequestService'
 import UserFactNotFoundException from '../../../exceptions/UserFactNotFoundException'
 

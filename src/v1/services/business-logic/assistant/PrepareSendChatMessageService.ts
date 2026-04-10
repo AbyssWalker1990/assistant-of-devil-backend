@@ -1,6 +1,6 @@
 import { Request } from 'express'
 
-import { UserFact } from '../../../models/UserFact'
+import { UserFact } from '../../../../../database/schema'
 import SendChatMessageRequestService from '../../../request-services/SendChatMessageRequestService'
 import SendMessageToAssistantService from './SendMessageToAssistantService'
 

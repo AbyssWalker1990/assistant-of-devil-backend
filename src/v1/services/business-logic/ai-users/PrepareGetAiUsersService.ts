@@ -1,7 +1,7 @@
 import { Request } from 'express'
 
 import db from '../../../config/db'
-import { aiUsers, AiUser } from '../../../models/AiUser'
+import { aiUsers, AiUser } from '../../../../../database/schema'
 
 class PrepareGetAiUsersService {
   public async handle(_req: Request): Promise<{ aiUsers: Omit<AiUser, 'passPhrase'>[] }> {

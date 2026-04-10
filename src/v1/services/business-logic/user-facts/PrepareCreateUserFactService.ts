@@ -2,8 +2,7 @@ import { Request } from 'express'
 import { eq } from 'drizzle-orm'
 
 import db from '../../../config/db'
-import { aiUsers } from '../../../models/AiUser'
-import { userFacts, UserFact } from '../../../models/UserFact'
+import { aiUsers, userFacts, UserFact } from '../../../../../database/schema'
 import CreateUserFactRequestService from '../../../request-services/CreateUserFactRequestService'
 import AiUserNotFoundException from '../../../exceptions/AiUserNotFoundException'
 

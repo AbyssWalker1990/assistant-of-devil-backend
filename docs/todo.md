@@ -16,6 +16,6 @@
 
 ## Refactoring
 
-- [ ] Remove empty model re-export files (`src/v1/models/AiUser.ts`, `src/v1/models/UserFact.ts`) and import directly from `database/schema.ts`
-- [ ] Extract DB fetch logic out of `SendMessageToAssistantService` into a dedicated service (e.g. `FetchUserContextService`)
-- [ ] Fix DB column names to use `snake_case` (e.g. `'created_at'` instead of `'createdAt'`) in schema — `database/schema.ts`
+- [x] Remove empty model re-export files (`src/v1/models/AiUser.ts`, `src/v1/models/UserFact.ts`) and import directly from `database/schema.ts`
+- [x] Extract DB fetch logic out of `SendMessageToAssistantService` into a dedicated service (e.g. `FetchUserContextService`)
+- [x] Fix DB column names to use `snake_case` (e.g. `'created_at'` instead of `'createdAt'`) in schema — `database/schema.ts`

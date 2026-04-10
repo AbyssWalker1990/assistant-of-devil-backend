@@ -2,8 +2,7 @@ import bcrypt from 'bcrypt'
 import { eq, sql } from 'drizzle-orm'
 
 import db from '../../../config/db'
-import { aiUsers, AiUser } from '../../../models/AiUser'
-import { userFacts, UserFact } from '../../../models/UserFact'
+import { aiUsers, AiUser, userFacts, UserFact } from '../../../../../database/schema'
 
 const SALT_ROUNDS = 12
 

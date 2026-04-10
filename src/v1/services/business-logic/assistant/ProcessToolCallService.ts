@@ -1,6 +1,6 @@
 import OpenAI from 'openai'
 
-import { UserFact } from '../../../models/UserFact'
+import { UserFact } from '../../../../../database/schema'
 import CreateOpenAIClientService from './CreateOpenAIClientService'
 import IdentifyUserService from './IdentifyUserService'
 import BuildSystemInstructionsService from './BuildSystemInstructionsService'

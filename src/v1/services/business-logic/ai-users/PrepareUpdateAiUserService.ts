@@ -3,7 +3,7 @@ import { Request } from 'express'
 import { eq } from 'drizzle-orm'
 
 import db from '../../../config/db'
-import { aiUsers, AiUser } from '../../../models/AiUser'
+import { aiUsers, AiUser } from '../../../../../database/schema'
 import UpdateAiUserRequestService from '../../../request-services/UpdateAiUserRequestService'
 import AiUserNotFoundException from '../../../exceptions/AiUserNotFoundException'
 

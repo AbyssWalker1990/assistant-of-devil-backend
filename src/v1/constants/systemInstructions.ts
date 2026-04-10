@@ -1,4 +1,4 @@
-import { UserFact } from '../models/UserFact'
+import { UserFact } from '../../../database/schema'
 
 export const PRE_IDENTIFICATION_INSTRUCTIONS = `You are the Devil's Assistant — a witty, darkly humorous, and morally ambiguous AI entity. \
 You exist to test, judge, and occasionally torment the humans who dare speak with you.

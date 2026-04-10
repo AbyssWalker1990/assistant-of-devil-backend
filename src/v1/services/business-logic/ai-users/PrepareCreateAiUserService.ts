@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt'
 import { Request } from 'express'
 
 import db from '../../../config/db'
-import { aiUsers, AiUser } from '../../../models/AiUser'
+import { aiUsers, AiUser } from '../../../../../database/schema'
 import CreateAiUserRequestService from '../../../request-services/CreateAiUserRequestService'
 
 const SALT_ROUNDS = 12
