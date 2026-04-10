@@ -18,7 +18,7 @@ class CreateDrizzleService {
       password: db.password,
     })
 
-    return drizzle(pool, { schema: { users, aiUsers, userFacts } })
+    return drizzle(pool, { schema: { users, aiUsers, userFacts }, casing: 'snake_case' })
   }
 }
 

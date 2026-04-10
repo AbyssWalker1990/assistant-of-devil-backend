@@ -15,6 +15,13 @@
       "when": 1775604910450,
       "tag": "0001_solid_bushwacker",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1775851904224,
+      "tag": "0002_lying_nekra",
+      "breakpoints": true
     }
   ]
 }
