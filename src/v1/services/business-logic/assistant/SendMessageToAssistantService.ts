@@ -30,7 +30,7 @@ class SendMessageToAssistantService {
     const client = this.createOpenAIClientService.handle()
 
     let instructions: string
-    if (aiUserId) {
+    if (aiUserId !== undefined) {
       const { aiUser, facts } = await this.fetchUserContextService.handle(aiUserId)
       instructions = this.buildSystemInstructionsService.handle(
         aiUser ? { userName: aiUser.name, facts } : undefined,

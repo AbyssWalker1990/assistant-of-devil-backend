@@ -1,9 +1,15 @@
 import OpenAI from 'openai'
+import { z } from 'zod'
 
 import { UserFact } from '../../../../../database/schema'
 import CreateOpenAIClientService from './CreateOpenAIClientService'
 import IdentifyUserService from './IdentifyUserService'
 import BuildSystemInstructionsService from './BuildSystemInstructionsService'
+
+const identifyUserArgsSchema = z.object({
+  name: z.string().min(1),
+  passPhrase: z.string().min(1),
+})
 
 export type ProcessToolCallResult =
   | {
@@ -35,8 +41,27 @@ class ProcessToolCallService {
 
     if (!toolCallItem) return null
 
-    const args = JSON.parse(toolCallItem.arguments) as { name: string; passPhrase: string }
-    const { name, passPhrase } = args
+    const parsed = identifyUserArgsSchema.safeParse(JSON.parse(toolCallItem.arguments))
+    if (!parsed.success) {
+      const client = this.createOpenAIClientService.handle()
+      const errorResponse = await client.responses.create({
+        model: 'gpt-4o',
+        previous_response_id: firstResponse.id,
+        input: [
+          {
+            type: 'function_call_output',
+            call_id: toolCallItem.call_id,
+            output: JSON.stringify({
+              status: 'error',
+              message: `Invalid tool call arguments: ${parsed.error.issues.map((i) => i.message).join(', ')}`,
+            }),
+          },
+        ],
+        store: true,
+      })
+      return { identified: false, text: errorResponse.output_text, responseId: errorResponse.id }
+    }
+    const { name, passPhrase } = parsed.data
     const client = this.createOpenAIClientService.handle()
 
     const wordCount = passPhrase.trim().split(/\s+/).length
