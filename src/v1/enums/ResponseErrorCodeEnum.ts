@@ -3,6 +3,7 @@ enum ResponseErrorCodeEnum {
   VALIDATION_ERROR = 'validation_error',
   AI_USER_NOT_FOUND = 'ai_user_not_found',
   USER_FACT_NOT_FOUND = 'user_fact_not_found',
+  INVALID_PASS_PHRASE = 'invalid_pass_phrase',
 }
 
 export default ResponseErrorCodeEnum

@@ -10,6 +10,7 @@ import GetSingleAiUserController from '../controllers/ai-users/GetSingleAiUserCo
 import CreateAiUserController from '../controllers/ai-users/CreateAiUserController'
 import UpdateAiUserController from '../controllers/ai-users/UpdateAiUserController'
 import DeleteAiUserController from '../controllers/ai-users/DeleteAiUserController'
+import AuthAiUserController from '../controllers/ai-users/AuthAiUserController'
 import GetUserFactsController from '../controllers/user-facts/GetUserFactsController'
 import GetSingleUserFactController from '../controllers/user-facts/GetSingleUserFactController'
 import CreateUserFactController from '../controllers/user-facts/CreateUserFactController'
@@ -24,6 +25,7 @@ router.get('/users/:id', new GetSingleUserController().get)
 router.post('/users', new CreateUserController().post)
 router.post('/chat/messages', new SendChatMessageController().post)
 
+router.post('/ai-users/auth', new AuthAiUserController().post)
 router.get('/ai-users', new GetAiUsersController().get)
 router.get('/ai-users/:id', new GetSingleAiUserController().get)
 router.post('/ai-users', new CreateAiUserController().post)

@@ -14,6 +14,6 @@ const pool = new Pool({
   password: dbConfig.password,
 })
 
-const db = drizzle(pool, { schema: { users, aiUsers, userFacts } })
+const db = drizzle(pool, { schema: { users, aiUsers, userFacts }, casing: 'snake_case' })
 
 export default db
